@@ -231,7 +231,7 @@ def find_approximate_functional_dependencies(data_file_name, depth_limit, minimu
   
     return approximate_FDs
 
-FDs = find_approximate_functional_dependencies('IndividualProjectTestSet1.csv', 4, .5)
+FDs = find_approximate_functional_dependencies('TestClaim.txt', 3, 0)
 print(FDs)
 pprint(FDs)
 

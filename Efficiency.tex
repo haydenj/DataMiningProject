@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage{mathtemplate}
+
+\begin{document}
+
+As an abuse of notation, write
+\begin{equation*}
+(a_1,\ldots,a_n) \in \mathrm{Data}
+\end{equation*}
+to mean that there is a row in $\mathrm{Data}$ such that when restricted to an understood set of attributes, the resulting tuple is $(a_1,\ldots,a_n)$.
+
+Denote by
+\begin{equation*}
+O((a_1,\ldots,a_n),a) \coloneq (\text{number of occurrences of $(a_1,\ldots,a_n,a)$ in $\mathrm{Data}$})
+\end{equation*}
+where $a$ corresponds to an attribute not in the set of attributes understood to correspond to $(a_1,\ldots, a_n)$.
+
+With this notation, the support of a functional dependency $F=\mathrm{Domain} \to \mathrm{Attribute}$ is given by
+\begin{equation} \label{support definition}
+\supp(F) = \dfrac{\sum_{(a_1,\ldots,a_n) \in \mathrm{Data}}{\max O( (a_1,\ldots, a_n), a)}}{\sum_{(a_1,\ldots, a_n) \in \mathrm{Data}}{\sum_a{O((a_1,\ldots, a_n),a)}}}
+\end{equation}
+
+We shall use the notation
+\begin{equation*}
+(a_1,\ldots, \hat{a_i},\ldots,a_n) = (a_1,\ldots, a_{i-1},a_{i+1},\ldots,a_n)
+\end{equation*}
+i.e. the hat indicates the non-presense of $a_i$ in the tuple.
+
+\begin{lem}
+There exists a finite collection of finite sets $A_{i,j}$ of non-negative reals such that
+$\sum_j{\max_i{A_{i,j}}} \leq \max_i{\sum_j{A_{i,j}}}$.
+
+There also exists a fintie collection of finite sets $A_{i,j}$ of non-negative reals such that
+$\sum_j{\max_i{A_{i,j}}} \geq \max_i{\sum_j{A_{i,j}}}$.
+\end{lem}
+\begin{proof}
+For the first claim, take
+\begin{equation*}
+\{ A_{1,1} = \{1,2\}, A_{1,2} = \{0,0\}\}
+\end{equation*}
+Then $\sum_j{\max_i{A_{i,j}}} = 2+0 = 2$ and $\max_i{\sum_j{A_{i,j}}} = \max(3,0) = 3$.
+
+For the second claim, take 
+\begin{equation*}
+\{ A_{1,1}=\{1,1\}, A_{1,2} = \{2,0\}\}
+\end{equation*}
+Then $\sum_j{\max_i{A_{i,j}}} = 1+2 =3$ and $\max_i{\sum_j{A_{i,j}}} = \max(2,2)=2$.
+\end{proof}
+
+With this in mind, we quickly see that
+\begin{equation*}
+O((a_1,\ldots, \hat{a_i},\ldots, a_n),a) = \sum_{a_i}{O((a_1,\ldots, a_i,\ldots,a_n),a)}
+\end{equation*}
+As a result, we find that
+\begin{align*}
+\sum_{(a_1,\ldots, \hat{a_i},\ldots, a_n) \in\mathrm{Data}}{\sum_a{O((a_1,\ldots, \hat{a_i},\ldots, a_n),a)}} & = \sum_{(a_1,\ldots, \hat{a_i},\ldots, a_n) \in\mathrm{Data}}{\sum_{a_i}{\sum_a{O((a_1,\ldots,a_i,\ldots, a_n),a)}}} \\
+& = \sum_{(a_1,\ldots, a_i,\ldots, a_n) \in\mathrm{Data}}{\sum_a{O((a_1,\ldots, a_i,\ldots, a_n),a)}}
+\end{align*}
+
+In other words, if $\mathrm{Domain}'$ is any subset of $\mathrm{Domain}$ and $F' = \mathrm{Domain}' \to \mathrm{Attribute}$, we see that the denominator of $\supp(F')$ in Equation~\ref{support definition} is the same as that for $\supp(F)$.
+
+%Likewise, 
+%\begin{align*}
+%\sum_{(a_1,\ldots,\hat{a_i},\ldots, a_n) \in\mathrm{Data}}{\max_a{O( (a_1,\ldots, \hat{a_i},\ldots,a_n),a)}} & = \sum_{(a_1,\ldots, \hat{a_i},\ldots,a_n) \in \mathrm{Data}}{\max_a{\sum_{a_i}{O( (a_1,\ldots, a_i,\ldots,a_n),a)}}} \\
+%& \leq \sum_{(a_1,\ldots, \hat{a_i},\ldots,a_n) \in \mathrm{Data}}{\sum_{a_i}{\max_a{O( (a_1,\ldots, a_i,\ldots,a_n),a)}}} \\
+%& = \sum_{(a_1,\ldots, a_i,\ldots,a_n) \in \mathrm{Data}}{\max_a{O( (a_1,\ldots, a_i,\ldots,a_n),a)}}
+%\end{align*}
+%
+%In other words, if $\mathrm{Domain}'$ is any subset of $\mathrm{Domain}$ and $F' = \mathrm{Domain}' \to \mathrm{Attribute}$, we see that the numerator of $\supp(F')$ in Equation~\ref{support definition} is the same as that for $\supp(F)$.
+%
+%Together,
+%\begin{equation*}
+%\supp(F') \leq \supp(F)
+%\end{equation*}
+
+\begin{tabular}[ c c c c ]
+A & B & C & D \\
+1 & 1 & 1 & 1 \\
+1 & 2 & 1 & 1 \\
+1 & 2 & 2 & 2 \\
+2 & 1 & 1 & 2 \\
+2 & 1 & 2 & 1
+\end{tabular}
+
+
+
+
+\end{document}
